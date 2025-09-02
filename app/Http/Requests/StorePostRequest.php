@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StorePostRequest extends FormRequest
+{
+    public function authorize(): bool {return true;}
+
+    public function rules(): array
+    {
+        return [
+            'title'     => ['required','string', 'max:255'],
+            'body'      => ['nullable','string'],
+            'published' => ['required','boolean'],
+        ];
+    }
+    public function messages(): array {
+        return [
+            'title.required' => 'Title is required',
+            'title.max'   => ('Maximum 255 characters allowed'),
+        ];
+    }
+    protected function prepareForValidation(): void {
+        $this->merge([
+            'published' => filter_var($this->input('published'), FILTER_VALIDATE_BOOL),
+        ]);
+    }
+}
