@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,11 +13,12 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that can be mass-assigned (fillable).
+     * These fields can be set directly when creating or updating a user.
      *
      * @var list<string>
      */
@@ -27,7 +29,8 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes that should be hidden when the model is converted to arrays or JSON.
+     * Typically used for sensitive information.
      *
      * @var list<string>
      */
@@ -37,7 +40,9 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Define how attributes should be automatically cast.
+     * - email_verified_at → converted to a DateTime object
+     * - password → automatically hashed when set
      *
      * @return array<string, string>
      */
