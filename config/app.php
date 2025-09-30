@@ -123,4 +123,16 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Mode (Custom)
+    |--------------------------------------------------------------------------
+    |
+    | Used by EnsureAdmin middleware to enable or disable admin-only access.
+    | You can control it via the APP_ADMIN_MODE key in your .env file.
+    |
+    */
+
+    'admin_mode' => env('APP_ADMIN_MODE', false),
+
 ];

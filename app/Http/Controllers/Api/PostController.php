@@ -23,15 +23,15 @@ class PostController extends Controller
     }
 
     // POST /api/posts → create a new post from validated request data
-    public function store(StorePostRequest $r): JsonResponse {
-        $post = Post::create($r->validated());
+    public function store(StorePostRequest $request): JsonResponse {
+        $post = Post::create($request->validated());
         // Return the created post with HTTP status 201 (Created)
         return response()->json($post, 201);
     }
 
     // PUT/PATCH /api/posts/{post} → update an existing post with validated request data
-    public function update(UpdatePostRequest $r, Post $post): JsonResponse {
-        $post->update($r->validated());
+    public function update(UpdatePostRequest $request, Post $post): JsonResponse {
+        $post->update($request->validated());
         return response()->json($post);
     }
 

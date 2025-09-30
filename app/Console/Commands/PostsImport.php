@@ -36,7 +36,7 @@ class PostsImport extends Command
         } else {
             // Otherwise, look in Laravel's "local" storage disk
             if (!Storage::disk('local')->exists($pathArg)) {
-                $this->error("File not found: {pathArg}");
+                $this->error("File not found: $pathArg");
                 return self::INVALID;
             }
             $json = Storage::disk('local')->get($pathArg);

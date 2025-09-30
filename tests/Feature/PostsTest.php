@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use Feature\TestCase;
 
 class PostsTest extends TestCase
 {

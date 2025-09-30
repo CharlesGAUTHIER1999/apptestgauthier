@@ -15,7 +15,7 @@ class PostsExport extends Command
         {--published-only : N’exporter que les posts publiés}
         {--since= : Exporter les posts créés depuis YYYY-MM-DD}
         {--limit= : limiter le nombre de posts}
-        {--columns= : id, slug, title, body, published, created_at, updated_at)}';
+        {--columns= : id, slug, title, body, published, created_at, updated_at}';
 
     // Description in php artisan list
     protected $description = 'Exporter les posts au format JSON (filtres et colonnes configurables)';
@@ -43,9 +43,9 @@ class PostsExport extends Command
             try {
                 $dt = Carbon::parse($since)->startOfDay();
                 $q->where('created_at', '>=', $dt);
-            } catch (\Throwable $e) {
+            } catch (\Throwable) {
                 // If the date is invalid → error message and stop
-                $this->error("Date invalide pour --since: {$since}");
+                $this->error("Date invalide pour --since: $since");
                 return self::INVALID;
             }
         }
@@ -93,8 +93,8 @@ class PostsExport extends Command
         }
 
         // success message with the file path and number of exported posts
-        $this->info('Export OK : ' . storage_path("app/{$path}"));
-        $this->line('Total : ' . count($rows) . 'post(s).');
+        $this->info('Export OK : ' . storage_path("app/$path"));
+        $this->line('Total : ' . count($rows) . ' post(s).');
 
         return self::SUCCESS;
         // ending of the request with status = success

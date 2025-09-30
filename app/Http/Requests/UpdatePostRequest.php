@@ -21,7 +21,7 @@ class UpdatePostRequest extends FormRequest
         $postId = $this->route('post')->id;
 
         return [
-            'title'     => ['required', 'string', 'max:255'], // required, must be string, max 255 chars
+            'title'     => ['required', 'string', 'max:255', Rule::unique('posts')->ignore($postId)], // required, must be string, max 255 chars
             'body'      => ['nullable', 'string'],            // optional, must be string if provided
             'published' => ['required', 'boolean'],           // required, must be boolean
         ];

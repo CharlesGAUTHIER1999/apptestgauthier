@@ -38,7 +38,7 @@ class Post extends Model
     }
 
     // Generate a unique slug from a given title
-    protected static function uniqueSlug(string $title, ?int $ignoreId = null): string
+    protected static function uniqueSlug(string $title, ?int $ignore_id = null): string
     {
         // Convert the title into a slug (fallback = "post" if empty)
         $base = Str::slug($title) ?: 'post';
@@ -47,16 +47,16 @@ class Post extends Model
 
         // Query to check if the slug already exists
         $query = static::where('slug', $slug);
-        if ($ignoreId) {
-            $query->where('id', '!=', $ignoreId); // ignore the current post when updating
+        if ($ignore_id) {
+            $query->where('id', '!=', $ignore_id); // ignore the current post when updating
         }
 
         // If the slug exists, keep appending "-1", "-2", etc. until it's unique
         while ($query->exists()) {
             $slug = $base . '-' . $i++;
             $query = static::where('slug', $slug);
-            if ($ignoreId) {
-                $query->where('id', '!=', $ignoreId);
+            if ($ignore_id) {
+                $query->where('id', '!=', $ignore_id);
             }
         }
 
