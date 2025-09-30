@@ -3,16 +3,21 @@
     <head>
         <meta charset="utf-8">
         <title>@yield('title', 'Mon App')</title>
+        {{-- CSS global --}}
+        @vite('resources/css/app.css')
+        {{-- CSS spécifique --}}
+        @stack('styles')
+        @vite('resources/js/app.js')
     </head>
-    <body>
-        <header>
-            <nav>
-                <a href="{{route('home')}}">Accueil</a>
-                <a href="/hello">Hello</a>
-                <a href="/hello-view">Hello View</a>
+    <body class="bg-gray-100 text-gray-800">
+        <header class="bg-white shadow p-4">
+            <nav class="space-x-4">
+                <a href="{{ route('home') }}" class="text-blue-600 hover:underline">Accueil</a>
+                <a href="/hello" class="text-blue-600 hover:underline">Hello</a>
+                <a href="/hello-view" class="text-blue-600 hover:underline">Hello View</a>
             </nav>
         </header>
-        <main>
+        <main class="p-6">
             @yield('content')
         </main>
     </body>

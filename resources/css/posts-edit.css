@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+
+.page-title {
+    @apply text-2xl font-bold mb-4;
+}
+
+.alert-warning {
+    @apply bg-yellow-100 border border-yellow-300 text-yellow-700 p-3 rounded mb-4;
+}
+
+form {
+    @apply bg-white shadow rounded p-6 space-y-4;
+}
+
+form label {
+    @apply block font-semibold mb-1;
+}
+
+form input[type="text"],
+form textarea {
+    @apply w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none;
+}
+
+form input[type="checkbox"] {
+    @apply mr-2;
+}
+
+.error {
+    @apply text-sm text-red-600 mt-1 block;
+}
+
+button[type="submit"] {
+    @apply bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition;
+}
+
+a.cancel-link {
+    @apply ml-4 text-gray-600 hover:underline;
+}

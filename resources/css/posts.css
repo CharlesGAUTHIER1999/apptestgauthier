@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+
+.page-title {
+    @apply text-2xl font-bold mb-4;
+}
+
+.alert-success {
+    @apply bg-green-100 border border-green-300 text-green-700 p-3 rounded mb-4;
+}
+
+.btn-new {
+    @apply inline-block text-blue-600 hover:underline mb-4;
+}
+
+.posts-list {
+    @apply space-y-3;
+}
+
+.posts-list li {
+    @apply bg-white shadow p-3 rounded flex items-center gap-3;
+}
+
+.post-title {
+    @apply font-semibold text-gray-800 hover:text-blue-600;
+}
+
+.status {
+    @apply text-sm ml-2;
+}
+
+.status.published {
+    @apply text-green-600 font-medium;
+}
+
+.status.draft {
+    @apply text-yellow-600 font-medium;
+}
+
+.btn-edit {
+    @apply ml-auto text-blue-500 hover:underline text-sm;
+}
+
+.inline-form .btn-delete {
+    @apply text-red-500 hover:underline text-sm ml-2;
+}
+
+.pagination {
+    @apply mt-6;
+}

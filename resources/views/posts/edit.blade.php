@@ -3,12 +3,16 @@
 {{-- Set the page title dynamically with the post title --}}
 @section('title', 'Éditer : '.$post->title)
 
+@push('styles')
+    @vite('resources/css/posts-edit.css')
+@endpush
+
 @section('content')
-    <h1>Éditer</h1>
+    <h1 class="page-title">Éditer</h1>
 
     {{-- If there are validation errors, show a warning message --}}
     @if ($errors->any())
-        <div style="background:#fff3cd;border:1px solid #ffeeba;padding:.75rem 1rem;margin:1rem 0;">
+        <div class="alert-warning">
             Merci de corriger les erreurs ci-dessous.
         </div>
     @endif
@@ -19,37 +23,36 @@
         @csrf @method('PUT')
 
         {{-- Title field --}}
-        <p>
-            <label for="title">Titre</label><br>
+        <div>
+            <label for="title">Titre</label>
             <input id="title" type="text" name="title" value="{{ old('title', $post->title) }}" required
                    @error('title') aria-invalid="true" @enderror>
-            {{-- Show validation error for "title" --}}
-            @error('title') <br><small style="color:red">{{ $message }}</small> @enderror
-        </p>
+            @error('title') <span class="error">{{ $message }}</span> @enderror
+        </div>
 
         {{-- Body (content) field --}}
-        <p>
-            <label for="body">Contenu</label><br>
-            <textarea name="body" rows="6">{{ old('body', $post->body) }}</textarea>
-            {{-- Show validation error for "body" --}}
-            @error('body') <br><small style="color:red">{{ $message }}</small> @enderror
-        </p>
+        <div>
+            <label for="body">Contenu</label>
+            <textarea id="body" name="body" rows="6">{{ old('body', $post->body) }}</textarea>
+            @error('body') <span class="error">{{ $message }}</span> @enderror
+        </div>
 
         {{-- Hidden input ensures "published" is always sent (default = 0) --}}
         <input type="hidden" name="published" value="0">
 
         {{-- Checkbox for "published" status --}}
-        <p>
+        <div>
             <label>
                 <input type="checkbox" name="published" value="1" @checked(old('published', $post->published))>
                 Publié
             </label>
-            {{-- Show validation error for "published" --}}
-            @error('published') <br><small style="color:red">{{ $message }}</small> @enderror
-        </p>
+            @error('published') <span class="error">{{ $message }}</span> @enderror
+        </div>
 
         {{-- Submit and cancel buttons --}}
-        <button type="submit">Mettre à jour</button>
-        <a href="{{ route('posts.index') }}">Annuler</a>
+        <div>
+            <button type="submit">Mettre à jour</button>
+            <a href="{{ route('posts.index') }}" class="cancel-link">Annuler</a>
+        </div>
     </form>
 @endsection

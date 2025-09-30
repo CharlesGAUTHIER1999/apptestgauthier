@@ -1,55 +1,49 @@
 @extends('layouts.app')
 
-{{-- Set the page title --}}
 @section('title', 'Créer un post')
 
-@section('content')
-    <h1>Nouveau post</h1>
+@push('styles')
+    @vite('resources/css/posts-create.css')
+@endpush
 
-    {{-- If there are any validation errors, show a warning message --}}
+@section('content')
+    <h1 class="page-title">Nouveau post</h1>
+
     @if($errors->any())
-        <div style="background:#fff3cd;border:1px solid #ffeeba;padding:.75rem 1rem;margin:1rem 0;">
-            Merci de corriger les erreurs ci-dessous {{-- (French: "Please correct the errors below") --}}
+        <div class="alert-warning">
+            Merci de corriger les erreurs ci-dessous
         </div>
     @endif
 
-    {{-- Form to create a new post --}}
     <form method="POST" action="{{ route('posts.store') }}">
-        {{-- CSRF protection token --}}
         @csrf
 
-        {{-- Title field --}}
-        <p>
-            <label for="title">Titre</label><br>
+        <div>
+            <label for="title">Titre</label>
             <input id="title" type="text" name="title" value="{{ old('title') }}" required autofocus
-                   @error('title') aria-invalid="true"@enderror>
-            {{-- Display error message if validation fails for "title" --}}
-            @error('title') <br><small style="color:red">{{ $message }}</small> @enderror
-        </p>
+                   @error('title') aria-invalid="true" @enderror>
+            @error('title') <span class="error">{{ $message }}</span> @enderror
+        </div>
 
-        {{-- Body (content) field --}}
-        <p>
-            <label for="body">Contenu</label><br>
+        <div>
+            <label for="body">Contenu</label>
             <textarea id="body" name="body" rows="6">{{ old('body') }}</textarea>
-            {{-- Display error message if validation fails for "body" --}}
-            @error('body') <br><small style="color:red">{{ $message }}</small> @enderror
-        </p>
+            @error('body') <span class="error">{{ $message }}</span> @enderror
+        </div>
 
-        {{-- Hidden input ensures "published" is always sent (default = 0) --}}
         <input type="hidden" name="published" value="0">
 
-        {{-- Checkbox for "published" status --}}
-        <p>
+        <div>
             <label>
                 <input type="checkbox" name="published" value="1" @checked(old('published'))>
-                Publié {{-- (French: "Published") --}}
+                Publié
             </label>
-            {{-- Display error message if validation fails for "published" --}}
-            @error('published') <br><small style="color:red">{{ $message }}</small> @enderror
-        </p>
+            @error('published') <span class="error">{{ $message }}</span> @enderror
+        </div>
 
-        {{-- Submit and cancel buttons --}}
-        <button type="submit">Enregistrer {{-- (French: "Save") --}}</button>
-        <a href="{{ route('posts.index') }}">Annuler {{-- (French: "Cancel") --}}</a>
+        <div>
+            <button type="submit">Enregistrer</button>
+            <a href="{{ route('posts.index') }}" class="cancel-link">Annuler</a>
+        </div>
     </form>
 @endsection

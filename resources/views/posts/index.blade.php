@@ -1,52 +1,52 @@
 @extends('layouts.app')
 
-{{-- Set the page title --}}
 @section('title', 'Posts')
 
-@section('content')
-    <h1>Posts</h1>
+@push('styles')
+    @vite('resources/css/posts.css')
+@endpush
 
-    {{-- Display success message if there is a session "status" --}}
+@section('content')
+
+    <h1 class="page-title">Posts</h1>
+
+    {{-- Message de succès --}}
     @if (session('status'))
-        <div style="background:#e6ffed;border:1px solid #b7f5c8;padding:.75rem 1rem;margin:1rem 0;">
+        <div class="alert-success">
             {{ session('status') }}
         </div>
     @endif
 
-    {{-- Link to create a new post --}}
-    <p><a href="{{ route('posts.create') }}">+ Nouveau post</a></p>
+    <p><a href="{{ route('posts.create') }}" class="btn-new">+ Nouveau post</a></p>
 
-    <ul>
-        {{-- Loop through posts (if there are any) --}}
+    <ul class="posts-list">
         @forelse ($posts as $post)
             <li>
-                {{-- Link to view the post --}}
-                <a href="{{ route('posts.show', $post) }}">
+                <a href="{{ route('posts.show', $post) }}" class="post-title">
                     {{ $post->title }}
                 </a>
 
-                {{-- Show whether the post is published or a draft --}}
                 @if($post->published)
-                    <small> — Publié ✅</small>
+                    <span class="status published">Publié ✅</span>
                 @else
-                    <small> — Brouillon ⏳</small>
+                    <span class="status draft">Brouillon ⏳</span>
                 @endif
 
-                {{-- Link to edit the post --}}
-                <small> · <a href="{{ route('posts.edit', $post) }}">Edit</a></small>
+                <a href="{{ route('posts.edit', $post) }}" class="btn-edit">Edit</a>
 
-                {{-- Delete form (inline) with confirmation dialog --}}
-                <form action="{{ route('posts.destroy', $post) }}" method="POST" style="display:inline" onsubmit="return confirm('Supprimer ce post ?')">
+                <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline-form"
+                      onsubmit="return confirm('Supprimer ce post ?')">
                     @csrf @method('DELETE')
-                    <button type="submit">supprimer</button>
+                    <button type="submit" class="btn-delete">Supprimer</button>
                 </form>
             </li>
         @empty
-            {{-- If no posts exist, show fallback message --}}
             <li>Aucun post.</li>
         @endforelse
     </ul>
 
-    {{-- Pagination links --}}
-    {{ $posts->links() }}
+    <div class="pagination">
+        {{ $posts->links() }}
+    </div>
 @endsection
+
