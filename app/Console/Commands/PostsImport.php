@@ -114,29 +114,22 @@ class PostsImport extends Command
                 ];
 
                 // Case: post already exists
-                if ($existing) {
-                    if ($allowUpdate) { // update allowed
-                        if ($dryRun) { // simulation only
-                            $this->line("[dry-run] update $slug");
-                        } else { // actual update
-                            $existing->update($data);
-                            $this->line("update $slug");
-                        }
-                        $updated++;
-                    } else {
-                        // Otherwise, skip the post
-                        $this->line("skip $slug (already exists)");
-                        $skipped++;
-                    }
-                } else {
-                    // Case: post does not exist yet
-                    if ($dryRun) {
-                        $this->line("[dry-run] create $slug");
-                    } else {
-                        Post::create($data); // insert new post
-                        $this->line("create $slug");
-                    }
+                if (!$existing) {
+                    // CREATE
+                    $dryRun
+                        ? $this->line("[dry-run] create $slug")
+                        : Post::create($data) && $this->line("create $slug");
                     $created++;
+                } elseif (!$allowUpdate) {
+                    // SKIP
+                    $this->line("skip $slug (already exists)");
+                    $skipped++;
+                } else {
+                    // UPDATE
+                    $dryRun
+                        ? $this->line("[dry-run] update $slug")
+                        : $existing->update($data) && $this->line("update $slug");
+                    $updated++;
                 }
             } catch (\Throwable $e) {
                 // On error for a given row
